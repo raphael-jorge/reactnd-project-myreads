@@ -20,7 +20,7 @@ class Bookshelf extends Component {
         <div className='bookshelf-books'>
           <ol className='books-grid'>
             {books.map( (book, idx) => (
-              <li key={idx}>
+              <li key={book.id}>
                 <Book
                   bookData={book}
                   availableBookshelves={availableBookshelves}

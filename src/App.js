@@ -1,12 +1,15 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
 import {Route} from 'react-router-dom';
-import books from './books';
+import * as BooksAPI from './BooksAPI';
 import ListBookshelves from './components/ListBookshelves';
 import AddBook from './components/AddBook'
 import './App.css'
 
 class BooksApp extends React.Component {
+  state = {
+    books: []
+  }
+
   bookshelves = [
     {
       name: 'currentlyReading',
@@ -22,13 +25,17 @@ class BooksApp extends React.Component {
     }
   ];
 
+  componentDidMount() {
+    BooksAPI.getAll().then(books => this.setState({books}));
+  }
+
   render() {
     return (
       <div className="app">
 
         <Route exact path='/' render={ () => (
           <ListBookshelves
-            books={books}
+            books={this.state.books}
             bookshelves={this.bookshelves}
             addBookPath={'/search'}
           />
