@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 class Book extends Component {
+  static propTypes = {
+    bookData: PropTypes.object.isRequired,
+    availableBookshelves: PropTypes.array.isRequired
+  }
+
   render () {
     const {bookData, availableBookshelves} = this.props;
 
@@ -34,7 +40,7 @@ class Book extends Component {
         {bookData.authors.map( author => (
           <div key={author} className='book-authors'>{author}</div>
         ))}
-        
+
       </div>
     );
   }
