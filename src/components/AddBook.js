@@ -1,17 +1,18 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 class AddBook extends Component {
   static propTypes = {
-    onListBooks: PropTypes.func.isRequired,
+    listBooksPath: PropTypes.string.isRequired,
   }
 
   render() {
-    const {onListBooks} = this.props;
+    const {listBooksPath} = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <a className="close-search" onClick={onListBooks}>Close</a>
+          <Link className="close-search" to={listBooksPath}></Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Bookshelf from './Bookshelf';
 
@@ -6,11 +7,11 @@ class ListBookshelves extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
-    onAddBook: PropTypes.func.isRequired
+    addBookPath: PropTypes.string.isRequired
   }
 
   render() {
-    const {books, bookshelves, onAddBook} = this.props;
+    const {books, bookshelves, addBookPath} = this.props;
 
     return (
       <div className="list-books">
@@ -31,7 +32,7 @@ class ListBookshelves extends Component {
         </div>
 
         <div className="open-search">
-          <a onClick={onAddBook}>Add a book</a>
+          <Link to={addBookPath}>Add a book</Link>
         </div>
 
       </div>
