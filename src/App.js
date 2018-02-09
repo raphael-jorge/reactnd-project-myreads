@@ -30,16 +30,24 @@ class BooksApp extends React.Component {
   }
 
   updateBook = (book, shelf) => {
+    // Atualiza o book na api
     BooksAPI.update(book, shelf).then( () => {
+      // depois atualiza o state books
       this.setState( (prevState) => {
-        // Update shelf on books state
-        const updatedBooksState = prevState.books.map( b => {
-          if (b.id === book.id) {
-            b.shelf = shelf;
-          }
-          return b;
-        });
+        let updatedBooksState = prevState.books;
 
+        // Procura o livro no state books
+        const booksIds = prevState.books.map( book => book.id );
+        const bookIdx = booksIds.indexOf(book.id);
+
+        if (bookIdx !== -1) {
+          // Se achar, atualiza a shelf do livro no state
+          updatedBooksState[bookIdx].shelf = shelf;
+        } else {
+          // Se não achar, atualiza a shelf do livro e o insere no state
+          book.shelf = shelf;
+          updatedBooksState.push(book);
+        }
         return {books: updatedBooksState};
       });
     });
@@ -60,6 +68,9 @@ class BooksApp extends React.Component {
 
         <Route exact path='/search' render={ () => (
           <AddBook
+            books={this.state.books}
+            bookshelves={this.bookshelves}
+            onBookUpdate={this.updateBook}
             listBooksPath={'/'}
           />
         )}/>
