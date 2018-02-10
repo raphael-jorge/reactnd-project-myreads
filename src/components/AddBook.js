@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as BooksAPI from '../BooksAPI';
-import Book from './Book';
+import ListBooks from './ListBooks';
 
 class AddBook extends Component {
   static propTypes = {
@@ -88,17 +88,11 @@ class AddBook extends Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
-            {this.state.queriedBooks.map( (book, idx) => (
-              <li key={book.id}>
-                <Book
-                  bookData={book}
-                  onBookUpdate={onBookUpdate}
-                  availableBookshelves={bookshelves}
-                />
-              </li>
-            ))}
-          </ol>
+          <ListBooks
+            books={this.state.queriedBooks}
+            onBookUpdate={onBookUpdate}
+            availableBookshelves={bookshelves}
+          />
         </div>
       </div>
     );
