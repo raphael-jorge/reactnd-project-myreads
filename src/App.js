@@ -48,6 +48,7 @@ class BooksApp extends React.Component {
           book.shelf = shelf;
           updatedBooksState.push(book);
         }
+        updatedBooksState = updatedBooksState.filter( book => book.shelf !== 'none');
         return {books: updatedBooksState};
       });
     });
