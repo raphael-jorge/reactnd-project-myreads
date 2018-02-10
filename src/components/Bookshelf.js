@@ -7,11 +7,12 @@ class Bookshelf extends Component {
     title: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
-    availableBookshelves: PropTypes.array.isRequired
+    availableBookshelves: PropTypes.array.isRequired,
+    loadingBooks: PropTypes.bool
   }
 
   render() {
-    const {title, books, onBookUpdate, availableBookshelves} = this.props;
+    const {title, books, onBookUpdate, availableBookshelves, loadingBooks} = this.props;
 
     return (
       <div className='bookshelf'>
@@ -23,6 +24,7 @@ class Bookshelf extends Component {
             books={books}
             onBookUpdate={onBookUpdate}
             availableBookshelves={availableBookshelves}
+            loadingBooks={loadingBooks}
           />
         </div>
 

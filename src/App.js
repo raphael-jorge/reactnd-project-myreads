@@ -7,7 +7,8 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    books: [],
+    loadingBooks: false
   }
 
   bookshelves = [
@@ -26,7 +27,12 @@ class BooksApp extends React.Component {
   ];
 
   componentDidMount() {
-    BooksAPI.getAll().then(books => this.setState({books}));
+    this.setState({loadingBooks: true});
+    BooksAPI.getAll()
+    .then(books => this.setState({
+      books: books,
+      loadingBooks: false
+    }));
   }
 
   updateBook = (book, shelf) => {
@@ -64,6 +70,7 @@ class BooksApp extends React.Component {
             bookshelves={this.bookshelves}
             onBookUpdate={this.updateBook}
             addBookPath={'/search'}
+            loadingBooks={this.state.loadingBooks}
           />
         )}/>
 

@@ -16,6 +16,7 @@ class AddBook extends Component {
   timer = null
   state = {
     query: '',
+    querying: false,
     queriedBooks: []
   }
 
@@ -43,24 +44,35 @@ class AddBook extends Component {
     const newQuery = event.target.value;
     this.setState({query: newQuery});
 
-    // Cancela a última operação de query da api e cria uma nova, atrasada.
+    // Cancela a última operação de query da api
     clearTimeout(this.timer);
     if (newQuery) {
+      this.setState({querying: true});
+      // Cria uma nova operação de query atrasada
       this.timer = setTimeout( () => {
         BooksAPI.search(newQuery).then( queriedBooks => {
           if (queriedBooks && queriedBooks.length && this.state.query) {
             // Insere o parametro shelf nos livros pesquisados
             queriedBooks = this.setShelfOnQueriedBooks(queriedBooks, books);
-            // Atualiza o queriedBooks state
-            this.setState({queriedBooks: queriedBooks});
+            // Atualiza o state
+            this.setState({
+              queriedBooks: queriedBooks,
+              querying: false
+            });
           } else {
-            this.setState({queriedBooks: []});
+            this.setState({
+              queriedBooks: [],
+              querying: false
+            });
           }
         });
       }, this.DEBOUNCE_TIME);
 
     } else {
-      this.setState({queriedBooks: []});
+      this.setState({
+        queriedBooks: [],
+        querying: false
+      });
     }
   }
 
@@ -92,6 +104,7 @@ class AddBook extends Component {
             books={this.state.queriedBooks}
             onBookUpdate={onBookUpdate}
             availableBookshelves={bookshelves}
+            loadingBooks={this.state.querying}
           />
         </div>
       </div>

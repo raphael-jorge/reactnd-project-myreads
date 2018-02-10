@@ -118,6 +118,15 @@ body, .app {
   padding: 10px 15px;
   text-align: left;
 }
+.books-grid li.loading{
+  height: 60px;
+  width: 100%;
+  font-size: 0;
+  background-image: url('./icons/loading.svg');
+  background-size: 40px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 .book {
   width: 140px;

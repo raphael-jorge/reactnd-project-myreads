@@ -8,11 +8,12 @@ class ListBookshelves extends Component {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
-    addBookPath: PropTypes.string.isRequired
+    addBookPath: PropTypes.string.isRequired,
+    loadingBooks: PropTypes.bool
   }
 
   render() {
-    const {books, bookshelves, onBookUpdate, addBookPath} = this.props;
+    const {books, bookshelves, onBookUpdate, addBookPath, loadingBooks} = this.props;
 
     return (
       <div className="list-books">
@@ -29,6 +30,7 @@ class ListBookshelves extends Component {
               books={books.filter(book => book.shelf === bookshelf.name)}
               onBookUpdate={onBookUpdate}
               availableBookshelves={bookshelves}
+              loadingBooks={loadingBooks}
             />
           ))}
         </div>
