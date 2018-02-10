@@ -7,25 +7,37 @@ class ListBooks extends Component {
     books: PropTypes.array.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
     availableBookshelves: PropTypes.array.isRequired,
-    loadingBooks: PropTypes.bool
+    loadingBooks: PropTypes.bool,
+    noBooksMessage: PropTypes.string
   }
 
   render() {
-    const {books, onBookUpdate, availableBookshelves, loadingBooks} = this.props;
+    const {
+      books,
+      onBookUpdate,
+      availableBookshelves,
+      loadingBooks,
+      noBooksMessage
+    } = this.props;
+
     return (
       <ol className="books-grid">
         {loadingBooks ? (
           <li className='loading'>Loading</li>
         ) : (
-          books.map( (book, idx) => (
-            <li key={book.id}>
-              <Book
-                bookData={book}
-                onBookUpdate={onBookUpdate}
-                availableBookshelves={availableBookshelves}
-              />
-            </li>
-          ))
+          books.length ? (
+            books.map( (book, idx) => (
+              <li key={book.id}>
+                <Book
+                  bookData={book}
+                  onBookUpdate={onBookUpdate}
+                  availableBookshelves={availableBookshelves}
+                />
+              </li>
+            ))
+          ) : (noBooksMessage &&
+            <li className='no-books'>{noBooksMessage}</li>
+          )
         )}
 
       </ol>

@@ -127,6 +127,9 @@ body, .app {
   background-repeat: no-repeat;
   background-position: center;
 }
+.books-grid li.no-books {
+  color: #999;
+}
 
 .book {
   width: 140px;

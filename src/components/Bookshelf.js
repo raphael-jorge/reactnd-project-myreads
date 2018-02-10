@@ -25,6 +25,7 @@ class Bookshelf extends Component {
             onBookUpdate={onBookUpdate}
             availableBookshelves={availableBookshelves}
             loadingBooks={loadingBooks}
+            noBooksMessage={'This Bookshelf is Empty'}
           />
         </div>
 

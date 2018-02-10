@@ -105,6 +105,7 @@ class AddBook extends Component {
             onBookUpdate={onBookUpdate}
             availableBookshelves={bookshelves}
             loadingBooks={this.state.querying}
+            noBooksMessage={this.state.query && 'No Book Matches Found'}
           />
         </div>
       </div>
