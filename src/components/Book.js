@@ -12,6 +12,29 @@ class Book extends Component {
   static coverHeight = 193
   static noImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
 
+  onShelfChange(event, bookData, onBookUpdate) {
+    const preventDefault = e => e.preventDefault();
+
+    const setLoading = () => {
+      // Mostra o ícone de loading
+      event.target.parentNode.classList.add('loading')
+      // Bloqueia o acesso ao dropdown
+      event.target.addEventListener('mousedown', preventDefault);
+    }
+
+    const clearLoading = () => {
+      // Remove o ícone de loading
+      event.target.parentNode.classList.remove('loading');
+      // Libera o acesso ao dropdown
+      event.target.removeEventListener('mousedown', preventDefault);
+    }
+
+    setLoading();
+    onBookUpdate(bookData, event.target.value)
+    .then(clearLoading)
+    .catch(clearLoading);
+  }
+
   render () {
     const {bookData, onBookUpdate, availableBookshelves} = this.props;
 
@@ -40,7 +63,10 @@ class Book extends Component {
           <div className='book-shelf-changer'>
             <select
               value={bookData.shelf || 'none'}
-              onChange={ event => onBookUpdate(bookData, event.target.value) }
+              onChange={ event => {
+                event.persist();
+                this.onShelfChange(event, bookData, onBookUpdate);
+              }}
             >
               <option value="none" disabled>Move to...</option>
               {availableBookshelves.map( bookshelf => (
