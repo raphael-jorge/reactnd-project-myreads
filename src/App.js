@@ -37,7 +37,8 @@ class BooksApp extends React.Component {
     .then(books => this.setState({
       books: books,
       loadingBooks: false
-    }));
+    }))
+    .catch( () => this.setState({loadingBooks: false}));
   }
 
   updateBook = (book, shelf) => {
