@@ -6,6 +6,7 @@ class ListBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
+    onBookClick: PropTypes.func,
     availableBookshelves: PropTypes.array.isRequired,
     loadingBooks: PropTypes.bool,
     noBooksMessage: PropTypes.string
@@ -15,6 +16,7 @@ class ListBooks extends Component {
     const {
       books,
       onBookUpdate,
+      onBookClick,
       availableBookshelves,
       loadingBooks,
       noBooksMessage
@@ -31,6 +33,7 @@ class ListBooks extends Component {
                 <Book
                   bookData={book}
                   onBookUpdate={onBookUpdate}
+                  onBookClick={onBookClick}
                   availableBookshelves={availableBookshelves}
                 />
               </li>

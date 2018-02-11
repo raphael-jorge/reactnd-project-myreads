@@ -190,3 +190,93 @@ body, .app {
   text-align: center;
   font-size: 0.8em;
 }
+
+/* Modal */
+
+.ReactModal__Body--open {
+  overflow-y: hidden;
+  margin-right: 17px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: scroll;
+  z-index: 10;
+}
+.modal-content {
+  position: relative;
+  margin: 45px auto;
+  padding: 30px;
+  max-width: 650px;
+  background: #eee;
+  border: 3px solid #2e7c31;
+  border-radius: 9px;
+  outline: none;
+}
+.modal-content .modal-header-close {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+  background: #eee;
+  background-image: url('./icons/cross.svg');
+  background-size: 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 0;
+  opacity: 0.5;
+  cursor: pointer;
+  border: none;
+}
+.modal-content hr {
+  margin: 25px auto;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(46, 124, 49, 0),
+    rgba(46, 124, 49, 0.75),
+    rgba(46, 124, 49, 0.75),
+    rgba(46, 124, 49, 0.75),
+    rgba(46, 124, 49, 0)
+    );
+}
+.modal-content .modal-description {
+  text-indent: 40px;
+  text-align: justify;
+  letter-spacing: 0.04em;
+  line-height: 28px;
+}
+.modal-content .modal-info {
+  padding-left: 0;
+  list-style: none;
+  text-align: center;
+}
+.modal-info li {
+  margin: 10px;
+}
+.modal-content .modal-buttons {
+  text-align: center;
+}
+.modal-buttons button {
+  margin: auto 20px;
+  height: 35px;
+  width: 20%;
+  min-width: 60px;
+  background-color: #60ac5d;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+.modal-buttons button:hover {
+  background-color: #2e7c31;
+  color: #fff;
+}

@@ -5,6 +5,7 @@ class Book extends Component {
   static propTypes = {
     bookData: PropTypes.object.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
+    onBookClick: PropTypes.func,
     availableBookshelves: PropTypes.array.isRequired
   }
 
@@ -36,7 +37,12 @@ class Book extends Component {
   }
 
   render () {
-    const {bookData, onBookUpdate, availableBookshelves} = this.props;
+    const {
+      bookData,
+      onBookUpdate,
+      onBookClick,
+      availableBookshelves
+    } = this.props;
 
     return (
       <div className='book'>
@@ -44,6 +50,7 @@ class Book extends Component {
         <div className='book-top'>
           <div
             className='book-cover'
+            onClick={onBookClick && (() => onBookClick(bookData))}
             style={ ( () => {
               const style = {
                 width: Book.coverWidth,
@@ -56,6 +63,9 @@ class Book extends Component {
                 style.backgroundSize = Book.coverWidth;
                 style.backgroundRepeat = 'no-repeat';
                 style.backgroundPosition = 'center';
+              }
+              if (onBookClick) {
+                style.cursor = 'pointer';
               }
               return style;
             })() }

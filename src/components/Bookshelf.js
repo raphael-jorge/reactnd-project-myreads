@@ -7,12 +7,20 @@ class Bookshelf extends Component {
     title: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
+    onBookClick: PropTypes.func,
     availableBookshelves: PropTypes.array.isRequired,
     loadingBooks: PropTypes.bool
   }
 
   render() {
-    const {title, books, onBookUpdate, availableBookshelves, loadingBooks} = this.props;
+    const {
+      title,
+      books,
+      onBookUpdate,
+      onBookClick,
+      availableBookshelves,
+      loadingBooks
+    } = this.props;
 
     return (
       <div className='bookshelf'>
@@ -23,6 +31,7 @@ class Bookshelf extends Component {
           <ListBooks
             books={books}
             onBookUpdate={onBookUpdate}
+            onBookClick={onBookClick}
             availableBookshelves={availableBookshelves}
             loadingBooks={loadingBooks}
             noBooksMessage={'This Bookshelf is Empty'}

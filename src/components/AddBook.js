@@ -9,6 +9,7 @@ class AddBook extends Component {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
     onBookUpdate: PropTypes.func.isRequired,
+    onBookClick: PropTypes.func,
     listBooksPath: PropTypes.string.isRequired,
   }
 
@@ -77,7 +78,14 @@ class AddBook extends Component {
   }
 
   render() {
-    const {books, bookshelves, onBookUpdate, listBooksPath} = this.props;
+    const {
+      books,
+      bookshelves,
+      onBookUpdate,
+      onBookClick,
+      listBooksPath
+    } = this.props;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -103,6 +111,7 @@ class AddBook extends Component {
           <ListBooks
             books={this.state.queriedBooks}
             onBookUpdate={onBookUpdate}
+            onBookClick={onBookClick}
             availableBookshelves={bookshelves}
             loadingBooks={this.state.querying}
             noBooksMessage={this.state.query && 'No Book Matches Found'}
