@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import sortBy from 'sort-by';
 import Book from './Book';
 
 class ListBooks extends Component {
@@ -28,7 +29,7 @@ class ListBooks extends Component {
           <li className='loading'>Loading</li>
         ) : (
           books.length ? (
-            books.map( (book, idx) => (
+            books.sort(sortBy('title')).map( (book, idx) => (
               <li key={book.id}>
                 <Book
                   bookData={book}
