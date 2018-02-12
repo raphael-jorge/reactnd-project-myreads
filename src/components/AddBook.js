@@ -3,13 +3,17 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as BooksAPI from '../BooksAPI';
 import ListBooks from './ListBooks';
+import BookModal from './BookModal';
 
 class AddBook extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
     onShelfUpdate: PropTypes.func.isRequired,
-    onBookClick: PropTypes.func,
+    onModalOpen: PropTypes.func,
+    onModalClose: PropTypes.func,
+    isModalOpen: PropTypes.bool,
+    bookModal: PropTypes.object,
     listBooksPath: PropTypes.string.isRequired,
   }
 
@@ -96,35 +100,56 @@ class AddBook extends Component {
     const {
       bookshelves,
       onShelfUpdate,
-      onBookClick,
+      onModalOpen,
+      onModalClose,
+      isModalOpen,
+      bookModal,
       listBooksPath
     } = this.props;
+
+    const isModalSet = (onModalOpen !== undefined &&
+                        onModalClose !== undefined &&
+                        isModalOpen !== undefined &&
+                        bookModal !== undefined);
 
     return (
       <div className="search-books">
 
-        <div className="search-books-bar">
-          <Link className="close-search" to={listBooksPath}></Link>
-          <div className="search-books-input-wrapper">
-            <input
-              type="text"
-              value={this.state.query}
-              placeholder="Search by title or author"
-              onChange={ e => this.onQueryChange(e.target.value) }
+        <div className='modal-main-app'>
+          <div className="search-books-bar">
+            <Link className="close-search" to={listBooksPath}></Link>
+            <div className="search-books-input-wrapper">
+              <input
+                type="text"
+                value={this.state.query}
+                placeholder="Search by title or author"
+                onChange={ e => this.onQueryChange(e.target.value) }
+              />
+            </div>
+          </div>
+
+          <div className="search-books-results">
+            <ListBooks
+              books={this.state.queriedBooks}
+              onShelfUpdate={this.setShelfUpdate(onShelfUpdate)}
+              onBookClick={isModalSet ? onModalOpen : undefined}
+              availableBookshelves={bookshelves}
+              loadingBooks={this.state.querying}
+              noBooksMessage={this.state.query && 'No Book Matches Found'}
             />
           </div>
         </div>
 
-        <div className="search-books-results">
-          <ListBooks
-            books={this.state.queriedBooks}
+        {isModalSet &&
+          <BookModal
+            isOpen={isModalOpen}
+            mainAppSelector={`.modal-main-app`}
+            onModalClose={onModalClose}
+            bookData={bookModal}
+            bookshelves={bookshelves}
             onShelfUpdate={this.setShelfUpdate(onShelfUpdate)}
-            onBookClick={onBookClick}
-            availableBookshelves={bookshelves}
-            loadingBooks={this.state.querying}
-            noBooksMessage={this.state.query && 'No Book Matches Found'}
           />
-        </div>
+        }
 
       </div>
     );

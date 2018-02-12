@@ -3,7 +3,6 @@ import {Route} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import MyReads from './components/MyReads';
 import AddBook from './components/AddBook'
-import BookModal from './components/BookModal';
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -13,8 +12,6 @@ class BooksApp extends React.Component {
     showModal: false,
     bookModal: {}
   }
-
-  mainContentId = 'main'
 
   bookshelves = [
     {
@@ -83,39 +80,37 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        <div id={this.mainContentId}>
 
-          <Route exact path='/' render={ () => (
-            <MyReads
-              books={this.state.books}
-              bookshelves={this.bookshelves}
-              onShelfUpdate={this.updateShelfOnBook}
-              onBookClick={this.openModal}
-              addBookPath={'/search'}
-              loadingBooks={this.state.loadingBooks}
-            />
-          )}/>
+        <Route exact path='/' render={ () => (
+          <MyReads
+            books={this.state.books}
+            bookshelves={this.bookshelves}
+            onShelfUpdate={this.updateShelfOnBook}
 
-          <Route exact path='/search' render={ () => (
-            <AddBook
-              books={this.state.books}
-              bookshelves={this.bookshelves}
-              onShelfUpdate={this.updateShelfOnBook}
-              onBookClick={this.openModal}
-              listBooksPath={'/'}
-            />
-          )}/>
+            onModalOpen={this.openModal}
+            onModalClose={this.closeModal}
+            isModalOpen={this.state.showModal}
+            bookModal={this.state.bookModal}
 
-        </div>
+            addBookPath={'/search'}
+            loadingBooks={this.state.loadingBooks}
+          />
+        )}/>
 
-        <BookModal
-          isOpen={this.state.showModal}
-          mainAppSelector={`#${this.mainContentId}`}
-          onModalClose={this.closeModal}
-          bookData={this.state.bookModal}
-          bookshelves={this.bookshelves}
-          onShelfUpdate={this.updateShelfOnBook}
-        />
+        <Route exact path='/search' render={ () => (
+          <AddBook
+            books={this.state.books}
+            bookshelves={this.bookshelves}
+            onShelfUpdate={this.updateShelfOnBook}
+
+            onModalOpen={this.openModal}
+            onModalClose={this.closeModal}
+            isModalOpen={this.state.showModal}
+            bookModal={this.state.bookModal}
+
+            listBooksPath={'/'}
+          />
+        )}/>
 
       </div>
     )
