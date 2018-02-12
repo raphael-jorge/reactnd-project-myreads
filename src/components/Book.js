@@ -9,10 +9,6 @@ class Book extends Component {
     availableBookshelves: PropTypes.array.isRequired
   }
 
-  static coverWidth = 128
-  static coverHeight = 193
-  static noImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg'
-
   onShelfChange(event, bookData, onBookUpdate) {
     const preventDefault = e => e.preventDefault();
 
@@ -44,31 +40,25 @@ class Book extends Component {
       availableBookshelves
     } = this.props;
 
+    const hasImageLink = bookData.imageLinks && bookData.imageLinks.thumbnail;
+
+    // Configura o estilo do cover
+    const bookCoverStyle = {};
+    if (hasImageLink) {
+      bookCoverStyle.backgroundImage = `url(${bookData.imageLinks.thumbnail})`;
+    }
+    if (onBookClick) {
+      bookCoverStyle.cursor = 'pointer';
+    }
+
     return (
       <div className='book'>
 
         <div className='book-top'>
           <div
-            className='book-cover'
+            className={`book-cover ${ !hasImageLink && 'book-cover-no-image'}`}
             onClick={onBookClick && (() => onBookClick(bookData))}
-            style={ ( () => {
-              const style = {
-                width: Book.coverWidth,
-                height: Book.coverHeight
-              };
-              if (bookData.imageLinks && bookData.imageLinks.thumbnail) {
-                style.backgroundImage = `url(${bookData.imageLinks.thumbnail})`;
-              } else {
-                style.backgroundImage = `url(${Book.noImageUrl})`;
-                style.backgroundSize = Book.coverWidth;
-                style.backgroundRepeat = 'no-repeat';
-                style.backgroundPosition = 'center';
-              }
-              if (onBookClick) {
-                style.cursor = 'pointer';
-              }
-              return style;
-            })() }
+            style={bookCoverStyle}
           />
           <div className='book-shelf-changer'>
             <select
