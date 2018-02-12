@@ -8,41 +8,63 @@ class AddBook extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
-    onBookUpdate: PropTypes.func.isRequired,
+    onShelfUpdate: PropTypes.func.isRequired,
     onBookClick: PropTypes.func,
     listBooksPath: PropTypes.string.isRequired,
   }
 
-  DEBOUNCE_TIME = 300
-  timer = null
   state = {
     query: '',
     querying: false,
     queriedBooks: []
   }
 
-  setShelfOnQueriedBooks(queriedBooks, books) {
-    const booksIds = books.map( book => book.id );
+  DEBOUNCE_TIME = 300
+  timer = null
+  noQueryingState = {
+    queriedBooks: [],
+    querying: false
+  };
 
-    const queriedBooksSet = queriedBooks.map( queriedBook => {
-      // Procura o queriedBook nos books
-      const queriedBookIdx = booksIds.indexOf(queriedBook.id);
-      if (queriedBookIdx !== -1) {
-        // Se achar, cria e atualiza a shelf no queriedBook
-        queriedBook.shelf = books[queriedBookIdx].shelf;
+  queryBookFromAPI = (query) => {
+    BooksAPI.search(query)
+    .then( queriedBooks => {
+      // Se foram encontrados livros e há um valor no campo de pesquisa...
+      if (queriedBooks && queriedBooks.length && this.state.query) {
+        // Insere o parametro shelf nos livros pesquisados e atualiza o state
+        queriedBooks = this.setShelfOnBooks(this.props.books, queriedBooks);
+        this.setState({
+          queriedBooks: queriedBooks,
+          querying: false
+        });
       } else {
-        // Se não achar, cria a shelf no queriedBook com valor 'none'
-        queriedBook.shelf = 'none';
+        this.setState(this.noQueryingState);
       }
-      return queriedBook;
-    });
-
-    return queriedBooksSet;
+    })
+    .catch( () => this.setState(this.noQueryingState) );
   }
 
-  handleQueryChange = (event, books) => {
+  setShelfOnBooks = (referenceBooks, booksToUpdate) => {
+    const refBooksIds = referenceBooks.map( book => book.id );
+
+    const updatedBooks = booksToUpdate.map( bookToUpdate => {
+      // Procura o bookToUpdate no referenceBooks
+      const idxOnRefBooks = refBooksIds.indexOf(bookToUpdate.id);
+      const updatedBook = bookToUpdate;
+      // Cria ou atualiza o parâmetro shelf
+      if (idxOnRefBooks === -1) {
+        updatedBook.shelf = 'none';
+      } else {
+        updatedBook.shelf = referenceBooks[idxOnRefBooks].shelf;
+      }
+      return updatedBook;
+    });
+
+    return updatedBooks;
+  }
+
+  onQueryChange = (newQuery) => {
     // Atualiza o state query
-    const newQuery = event.target.value;
     this.setState({query: newQuery});
 
     // Cancela a última operação de query da api
@@ -50,78 +72,47 @@ class AddBook extends Component {
     if (newQuery) {
       this.setState({querying: true});
       // Cria uma nova operação de query atrasada
-      this.timer = setTimeout( () => {
-        BooksAPI.search(newQuery)
-        .then( queriedBooks => {
-          if (queriedBooks && queriedBooks.length && this.state.query) {
-            // Insere o parametro shelf nos livros pesquisados
-            queriedBooks = this.setShelfOnQueriedBooks(queriedBooks, books);
-            // Atualiza o state
-            this.setState({
-              queriedBooks: queriedBooks,
-              querying: false
-            });
-          } else {
-            this.setState({
-              queriedBooks: [],
-              querying: false
-            });
-          }
-        })
-        .catch( () => this.setState({
-          queriedBooks: [],
-          querying: false
-        }));
-      }, this.DEBOUNCE_TIME);
-
+      this.timer = setTimeout( () => this.queryBookFromAPI(newQuery),
+                              this.DEBOUNCE_TIME);
     } else {
-      this.setState({
-        queriedBooks: [],
-        querying: false
-      });
+      this.setState(this.noQueryingState);
     }
   }
 
   render() {
     const {
-      books,
       bookshelves,
-      onBookUpdate,
+      onShelfUpdate,
       onBookClick,
       listBooksPath
     } = this.props;
 
     return (
       <div className="search-books">
+
         <div className="search-books-bar">
           <Link className="close-search" to={listBooksPath}></Link>
           <div className="search-books-input-wrapper">
-            {/*
-              NOTES: The search from BooksAPI is limited to a particular set of search terms.
-              You can find these search terms here:
-              https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-              However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-              you don't find a specific author or title. Every search is limited by search terms.
-            */}
             <input
               type="text"
               value={this.state.query}
               placeholder="Search by title or author"
-              onChange={ e => this.handleQueryChange(e, books) }
+              onChange={ e => this.onQueryChange(e.target.value) }
             />
           </div>
         </div>
+
         <div className="search-books-results">
           <ListBooks
             books={this.state.queriedBooks}
-            onBookUpdate={onBookUpdate}
+            onShelfUpdate={onShelfUpdate}
             onBookClick={onBookClick}
             availableBookshelves={bookshelves}
             loadingBooks={this.state.querying}
             noBooksMessage={this.state.query && 'No Book Matches Found'}
           />
         </div>
+
       </div>
     );
   }

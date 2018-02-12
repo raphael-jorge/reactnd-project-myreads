@@ -4,30 +4,33 @@ import PropTypes from 'prop-types';
 class Book extends Component {
   static propTypes = {
     bookData: PropTypes.object.isRequired,
-    onBookUpdate: PropTypes.func.isRequired,
+    onShelfUpdate: PropTypes.func.isRequired,
     onBookClick: PropTypes.func,
     availableBookshelves: PropTypes.array.isRequired
   }
 
-  onShelfChange(event, bookData, onBookUpdate) {
-    const preventDefault = e => e.preventDefault();
+  static blockShelfChange = e => e.preventDefault()
+
+  onShelfChange = (event, bookData, onShelfUpdate) => {
 
     const setLoading = () => {
       // Mostra o ícone de loading
       event.target.parentNode.classList.add('loading')
       // Bloqueia o acesso ao dropdown
-      event.target.addEventListener('mousedown', preventDefault);
+      event.target.addEventListener('mousedown', Book.blockShelfChange);
     }
 
     const clearLoading = () => {
       // Remove o ícone de loading
       event.target.parentNode.classList.remove('loading');
       // Libera o acesso ao dropdown
-      event.target.removeEventListener('mousedown', preventDefault);
+      event.target.removeEventListener('mousedown', Book.blockShelfChange);
     }
 
+    const newShelf = event.target.value;
+
     setLoading();
-    onBookUpdate(bookData, event.target.value)
+    onShelfUpdate(bookData, newShelf)
     .then(clearLoading)
     .catch(clearLoading);
   }
@@ -35,7 +38,7 @@ class Book extends Component {
   render () {
     const {
       bookData,
-      onBookUpdate,
+      onShelfUpdate,
       onBookClick,
       availableBookshelves
     } = this.props;
@@ -65,7 +68,7 @@ class Book extends Component {
               value={bookData.shelf || 'none'}
               onChange={ event => {
                 event.persist();
-                this.onShelfChange(event, bookData, onBookUpdate);
+                this.onShelfChange(event, bookData, onShelfUpdate);
               }}
             >
               <option value="none" disabled>Move to...</option>

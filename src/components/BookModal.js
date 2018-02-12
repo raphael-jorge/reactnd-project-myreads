@@ -10,7 +10,7 @@ class BookModal extends Component {
     onModalClose: PropTypes.func.isRequired,
     bookData: PropTypes.object.isRequired,
     bookshelves: PropTypes.array.isRequired,
-    onBookUpdate: PropTypes.func.isRequired
+    onShelfUpdate: PropTypes.func.isRequired
   }
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class BookModal extends Component {
       onModalClose,
       bookData,
       bookshelves,
-      onBookUpdate
+      onShelfUpdate
     } = this.props;
 
     return (
@@ -49,7 +49,7 @@ class BookModal extends Component {
         {/* Exibe o componente book */}
         <ListBooks
           books={[bookData]}
-          onBookUpdate={onBookUpdate}
+          onShelfUpdate={onShelfUpdate}
           availableBookshelves={bookshelves}
           loadingBooks={false}
         />

@@ -6,7 +6,7 @@ class Bookshelf extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
-    onBookUpdate: PropTypes.func.isRequired,
+    onShelfUpdate: PropTypes.func.isRequired,
     onBookClick: PropTypes.func,
     availableBookshelves: PropTypes.array.isRequired,
     loadingBooks: PropTypes.bool
@@ -16,7 +16,7 @@ class Bookshelf extends Component {
     const {
       title,
       books,
-      onBookUpdate,
+      onShelfUpdate,
       onBookClick,
       availableBookshelves,
       loadingBooks
@@ -30,7 +30,7 @@ class Bookshelf extends Component {
         <div className='bookshelf-books'>
           <ListBooks
             books={books}
-            onBookUpdate={onBookUpdate}
+            onShelfUpdate={onShelfUpdate}
             onBookClick={onBookClick}
             availableBookshelves={availableBookshelves}
             loadingBooks={loadingBooks}

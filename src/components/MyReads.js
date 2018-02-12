@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Bookshelf from './Bookshelf';
 
-class ListBookshelves extends Component {
+class MyReads extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
-    onBookUpdate: PropTypes.func.isRequired,
+    onShelfUpdate: PropTypes.func.isRequired,
     onBookClick: PropTypes.func,
     addBookPath: PropTypes.string.isRequired,
     loadingBooks: PropTypes.bool
@@ -17,7 +17,7 @@ class ListBookshelves extends Component {
     const {
       books,
       bookshelves,
-      onBookUpdate,
+      onShelfUpdate,
       onBookClick,
       addBookPath,
       loadingBooks
@@ -36,7 +36,7 @@ class ListBookshelves extends Component {
               key={bookshelf.name}
               title={bookshelf.title}
               books={books.filter(book => book.shelf === bookshelf.name)}
-              onBookUpdate={onBookUpdate}
+              onShelfUpdate={onShelfUpdate}
               onBookClick={onBookClick}
               availableBookshelves={bookshelves}
               loadingBooks={loadingBooks}
@@ -53,4 +53,4 @@ class ListBookshelves extends Component {
   }
 }
 
-export default ListBookshelves;
+export default MyReads;

@@ -6,9 +6,9 @@ import Book from './Book';
 class ListBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onBookUpdate: PropTypes.func.isRequired,
-    onBookClick: PropTypes.func,
+    onShelfUpdate: PropTypes.func.isRequired,
     availableBookshelves: PropTypes.array.isRequired,
+    onBookClick: PropTypes.func,
     loadingBooks: PropTypes.bool,
     noBooksMessage: PropTypes.string
   }
@@ -16,7 +16,7 @@ class ListBooks extends Component {
   render() {
     const {
       books,
-      onBookUpdate,
+      onShelfUpdate,
       onBookClick,
       availableBookshelves,
       loadingBooks,
@@ -29,11 +29,11 @@ class ListBooks extends Component {
           <li className='loading'>Loading</li>
         ) : (
           books.length ? (
-            books.sort(sortBy('title')).map( (book, idx) => (
+            books.sort(sortBy('title')).map( book => (
               <li key={book.id}>
                 <Book
                   bookData={book}
-                  onBookUpdate={onBookUpdate}
+                  onShelfUpdate={onShelfUpdate}
                   onBookClick={onBookClick}
                   availableBookshelves={availableBookshelves}
                 />
@@ -43,7 +43,6 @@ class ListBooks extends Component {
             <li className='no-books'>{noBooksMessage}</li>
           )
         )}
-
       </ol>
     );
   }
