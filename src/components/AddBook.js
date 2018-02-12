@@ -63,6 +63,19 @@ class AddBook extends Component {
     return updatedBooks;
   }
 
+  setShelfUpdate = (onShelfUpdate) => {
+    const newOnShelfUpdate = (bookData, newShelf) => {
+      return onShelfUpdate(bookData, newShelf).then( () => {
+        // Atualiza o parâmetro shelf nos livros pesquisados
+        const updatedQueriedBooks = this.setShelfOnBooks(this.props.books,
+                                                         this.state.queriedBooks);
+        this.setState({queriedBooks: updatedQueriedBooks});
+      });
+    };
+
+    return newOnShelfUpdate;
+  }
+
   onQueryChange = (newQuery) => {
     // Atualiza o state query
     this.setState({query: newQuery});
@@ -105,7 +118,7 @@ class AddBook extends Component {
         <div className="search-books-results">
           <ListBooks
             books={this.state.queriedBooks}
-            onShelfUpdate={onShelfUpdate}
+            onShelfUpdate={this.setShelfUpdate(onShelfUpdate)}
             onBookClick={onBookClick}
             availableBookshelves={bookshelves}
             loadingBooks={this.state.querying}
