@@ -3,13 +3,25 @@ import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import ListBooks from './ListBooks';
 
+/**
+ * @description Modal para exibir as informações de um livro. Requer os
+ * módulos React, PropTypes e React Modal.
+ * @extends React.Component
+ * @exports BookModal
+ */
 export default class BookModal extends Component {
   static propTypes = {
+    // Indica se o modal deve ser exibido.
     isOpen: PropTypes.bool.isRequired,
+    // Seletor css do conteúdo principal da página onde o modal é renderizado.
     mainAppSelector: PropTypes.string.isRequired,
+    // A função a ser chamada para fechar o modal.
     onModalClose: PropTypes.func.isRequired,
+    // Os dados do livro a ser exibido no modal.
     bookData: PropTypes.object.isRequired,
+    // As prateleiras disponíveis.
     bookshelves: PropTypes.array.isRequired,
+    // A função a ser chamada quando o parâmetro shelf de um livro é modificado.
     onShelfUpdate: PropTypes.func.isRequired
   }
 
@@ -92,7 +104,7 @@ export default class BookModal extends Component {
         <hr/>
 
         {/* Links para ver mais informações sobre o livro, se o site estiver disponível,
-        e para dechar o Modal*/}
+        e para fechar o Modal*/}
         <div className="modal-buttons">
           {bookData.infoLink &&
             <a href={bookData.infoLink} target="_blank">

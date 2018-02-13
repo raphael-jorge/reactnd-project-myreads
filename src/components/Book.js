@@ -1,16 +1,40 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * @description Representa um livro. Requer os módulos React e PropTypes.
+ * @extends React.Component
+ * @exports Book
+ */
 export default class Book extends Component {
   static propTypes = {
+    // Os dados do livro.
     bookData: PropTypes.object.isRequired,
+    // A função a ser chamada quando o parâmetro shelf do livro é modificado.
     onShelfUpdate: PropTypes.func.isRequired,
+    // A função a ser chamada caso haja um clique na capa do livro.
     onBookClick: PropTypes.func,
+    // As bookshelves disponíveis.
     availableBookshelves: PropTypes.array.isRequired
   }
 
-  static blockShelfChange = e => e.preventDefault()
+  /**
+   * @method
+   * @description Bloqueia o evento de mudança da propriedade shelf do livro.
+   * @param {object} event O evento de mudança.
+   */
+  static blockShelfChange = event => event.preventDefault()
 
+  /**
+   * @method
+   * @description Configura a renderização do ícone de carregamento e bloqueia
+   * novas operações de mudança da propriedade shelf do livro até que a última
+   * solicitação tenha sido resolvida.
+   * @param {object} event O evento de mudança.
+   * @param {object} bookData O objeto com as informações do livro.
+   * @param {function} onShelfUpdate A função a ser chamada para alterar o
+   * parâmetro shelf do livro.
+   */
   onShelfChange = (event, bookData, onShelfUpdate) => {
 
     const setLoading = () => {
