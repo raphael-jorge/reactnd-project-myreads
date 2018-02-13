@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import ListBooks from './ListBooks';
 
-class BookModal extends Component {
+export default class BookModal extends Component {
   static propTypes = {
     isOpen: PropTypes.bool.isRequired,
     mainAppSelector: PropTypes.string.isRequired,
@@ -42,7 +42,7 @@ class BookModal extends Component {
         }}
       >
         {/* Fechar Modal */}
-        <button className='modal-header-close' onClick={onModalClose}>
+        <button className="modal-header-close" onClick={onModalClose}>
           Close
         </button>
 
@@ -58,14 +58,14 @@ class BookModal extends Component {
 
         {/* Descrição do livro, se disponível */}
         {bookData.description &&
-          <div className='modal-description'>
+          <div className="modal-description">
             <p>{bookData.description}</p>
             <hr/>
           </div>
         }
 
         {/* Informações adicionais, se disponíveis */}
-        <ul className='modal-info'>
+        <ul className="modal-info">
           {bookData.publisher &&
             <li><strong>Publisher: </strong>{bookData.publisher}</li>
           }
@@ -84,7 +84,7 @@ class BookModal extends Component {
           {bookData.shelf && bookData.shelf !== 'none' &&
             <li>
               <strong>On Shelf: </strong>
-              {bookshelves.filter( shelf => (shelf.name === bookData.shelf))[0].title}
+              {bookshelves.filter(shelf => (shelf.name === bookData.shelf))[0].title}
             </li>
           }
         </ul>
@@ -93,9 +93,9 @@ class BookModal extends Component {
 
         {/* Links para ver mais informações sobre o livro, se o site estiver disponível,
         e para dechar o Modal*/}
-        <div className='modal-buttons'>
+        <div className="modal-buttons">
           {bookData.infoLink &&
-            <a href={bookData.infoLink} target='_blank'>
+            <a href={bookData.infoLink} target="_blank">
               <button>More</button>
             </a>
           }
@@ -106,5 +106,3 @@ class BookModal extends Component {
     );
   }
 }
-
-export default BookModal;

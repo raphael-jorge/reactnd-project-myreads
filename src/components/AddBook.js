@@ -5,7 +5,7 @@ import * as BooksAPI from '../BooksAPI';
 import ListBooks from './ListBooks';
 import BookModal from './BookModal';
 
-class AddBook extends Component {
+export default class AddBook extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
@@ -17,22 +17,22 @@ class AddBook extends Component {
     listBooksPath: PropTypes.string.isRequired,
   }
 
+  DEBOUNCE_TIME = 300
+  timer = null
+  noQueryingState = {
+    queriedBooks: [],
+    querying: false
+  }
+
   state = {
     query: '',
     querying: false,
     queriedBooks: []
   }
 
-  DEBOUNCE_TIME = 300
-  timer = null
-  noQueryingState = {
-    queriedBooks: [],
-    querying: false
-  };
-
-  queryBookFromAPI = (query) => {
+  queryBookFromAPI = query => {
     BooksAPI.search(query)
-    .then( queriedBooks => {
+    .then(queriedBooks => {
       // Se foram encontrados livros e há um valor no campo de pesquisa...
       if (queriedBooks && queriedBooks.length && this.state.query) {
         // Insere o parametro shelf nos livros pesquisados e atualiza o state
@@ -45,13 +45,13 @@ class AddBook extends Component {
         this.setState(this.noQueryingState);
       }
     })
-    .catch( () => this.setState(this.noQueryingState) );
+    .catch(() => this.setState(this.noQueryingState));
   }
 
   setShelfOnBooks = (referenceBooks, booksToUpdate) => {
-    const refBooksIds = referenceBooks.map( book => book.id );
+    const refBooksIds = referenceBooks.map(book => book.id);
 
-    const updatedBooks = booksToUpdate.map( bookToUpdate => {
+    const updatedBooks = booksToUpdate.map(bookToUpdate => {
       // Procura o bookToUpdate no referenceBooks
       const idxOnRefBooks = refBooksIds.indexOf(bookToUpdate.id);
       const updatedBook = bookToUpdate;
@@ -67,9 +67,9 @@ class AddBook extends Component {
     return updatedBooks;
   }
 
-  setShelfUpdate = (onShelfUpdate) => {
+  setShelfUpdate = onShelfUpdate => {
     const newOnShelfUpdate = (bookData, newShelf) => {
-      return onShelfUpdate(bookData, newShelf).then( () => {
+      return onShelfUpdate(bookData, newShelf).then(() => {
         // Atualiza o parâmetro shelf nos livros pesquisados
         const updatedQueriedBooks = this.setShelfOnBooks(this.props.books,
                                                          this.state.queriedBooks);
@@ -80,7 +80,7 @@ class AddBook extends Component {
     return newOnShelfUpdate;
   }
 
-  onQueryChange = (newQuery) => {
+  onQueryChange = newQuery => {
     // Atualiza o state query
     this.setState({query: newQuery});
 
@@ -89,7 +89,7 @@ class AddBook extends Component {
     if (newQuery) {
       this.setState({querying: true});
       // Cria uma nova operação de query atrasada
-      this.timer = setTimeout( () => this.queryBookFromAPI(newQuery),
+      this.timer = setTimeout(() => this.queryBookFromAPI(newQuery),
                               this.DEBOUNCE_TIME);
     } else {
       this.setState(this.noQueryingState);
@@ -115,7 +115,7 @@ class AddBook extends Component {
     return (
       <div className="search-books">
 
-        <div className='modal-main-app'>
+        <div className="modal-main-app">
           <div className="search-books-bar">
             <Link className="close-search" to={listBooksPath}></Link>
             <div className="search-books-input-wrapper">
@@ -143,7 +143,7 @@ class AddBook extends Component {
         {isModalSet &&
           <BookModal
             isOpen={isModalOpen}
-            mainAppSelector={`.modal-main-app`}
+            mainAppSelector={'.modal-main-app'}
             onModalClose={onModalClose}
             bookData={bookModal}
             bookshelves={bookshelves}
@@ -155,5 +155,3 @@ class AddBook extends Component {
     );
   }
 }
-
-export default AddBook;

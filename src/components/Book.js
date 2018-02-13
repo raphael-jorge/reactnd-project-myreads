@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-class Book extends Component {
+export default class Book extends Component {
   static propTypes = {
     bookData: PropTypes.object.isRequired,
     onShelfUpdate: PropTypes.func.isRequired,
@@ -15,17 +15,17 @@ class Book extends Component {
 
     const setLoading = () => {
       // Mostra o ícone de loading
-      event.target.parentNode.classList.add('loading')
+      event.target.parentNode.classList.add('loading');
       // Bloqueia o acesso ao dropdown
       event.target.addEventListener('mousedown', Book.blockShelfChange);
-    }
+    };
 
     const clearLoading = () => {
       // Remove o ícone de loading
       event.target.parentNode.classList.remove('loading');
       // Libera o acesso ao dropdown
       event.target.removeEventListener('mousedown', Book.blockShelfChange);
-    }
+    };
 
     const newShelf = event.target.value;
 
@@ -35,7 +35,7 @@ class Book extends Component {
     .catch(clearLoading);
   }
 
-  render () {
+  render() {
     const {
       bookData,
       onShelfUpdate,
@@ -55,15 +55,15 @@ class Book extends Component {
     }
 
     return (
-      <div className='book'>
+      <div className="book">
 
-        <div className='book-top'>
+        <div className="book-top">
           <div
             className={`book-cover ${ !hasImageLink && 'book-cover-no-image'}`}
             onClick={onBookClick && (() => onBookClick(bookData))}
             style={bookCoverStyle}
           />
-          <div className='book-shelf-changer'>
+          <div className="book-shelf-changer">
             <select
               value={bookData.shelf || 'none'}
               onChange={ event => {
@@ -72,7 +72,7 @@ class Book extends Component {
               }}
             >
               <option value="none" disabled>Move to...</option>
-              {availableBookshelves.map( bookshelf => (
+              {availableBookshelves.map(bookshelf => (
                 <option key={bookshelf.name} value={bookshelf.name}>
                   {bookshelf.title}
                 </option>
@@ -83,16 +83,14 @@ class Book extends Component {
         </div>
 
         {bookData.title &&
-          <div className='book-title'>{bookData.title}</div>
+          <div className="book-title">{bookData.title}</div>
         }
 
-        {bookData.authors && bookData.authors.map( author => (
-          <div key={author} className='book-authors'>{author}</div>
+        {bookData.authors && bookData.authors.map(author => (
+          <div key={author} className="book-authors">{author}</div>
         ))}
 
       </div>
     );
   }
 }
-
-export default Book;

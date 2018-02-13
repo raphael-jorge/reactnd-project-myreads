@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Bookshelf from './Bookshelf';
 import BookModal from './BookModal';
 
-class MyReads extends Component {
+export default class MyReads extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     bookshelves: PropTypes.array.isRequired,
@@ -38,14 +38,14 @@ class MyReads extends Component {
     return (
       <div className="list-books">
 
-        <div className='modal-main-app'>
+        <div className="modal-main-app">
 
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
 
           <div className="list-books-content">
-            {bookshelves.map( bookshelf => (
+            {bookshelves.map(bookshelf => (
               <Bookshelf
                 key={bookshelf.name}
                 title={bookshelf.title}
@@ -67,7 +67,7 @@ class MyReads extends Component {
         {isModalSet &&
           <BookModal
             isOpen={isModalOpen}
-            mainAppSelector={`.modal-main-app`}
+            mainAppSelector={'.modal-main-app'}
             onModalClose={onModalClose}
             bookData={bookModal}
             bookshelves={bookshelves}
@@ -79,5 +79,3 @@ class MyReads extends Component {
     );
   }
 }
-
-export default MyReads;

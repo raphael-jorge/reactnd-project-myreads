@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import sortBy from 'sort-by';
 import Book from './Book';
 
-class ListBooks extends Component {
+export default class ListBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
     onShelfUpdate: PropTypes.func.isRequired,
@@ -26,10 +26,10 @@ class ListBooks extends Component {
     return (
       <ol className="books-grid">
         {loadingBooks ? (
-          <li className='loading'>Loading</li>
+          <li className="loading">Loading</li>
         ) : (
           books.length ? (
-            books.sort(sortBy('title')).map( book => (
+            books.sort(sortBy('title')).map(book => (
               <li key={book.id}>
                 <Book
                   bookData={book}
@@ -40,12 +40,10 @@ class ListBooks extends Component {
               </li>
             ))
           ) : (noBooksMessage &&
-            <li className='no-books'>{noBooksMessage}</li>
+            <li className="no-books">{noBooksMessage}</li>
           )
         )}
       </ol>
     );
   }
 }
-
-export default ListBooks;

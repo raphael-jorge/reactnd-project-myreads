@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ListBooks from './ListBooks';
 
-class Bookshelf extends Component {
+export default class Bookshelf extends Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     books: PropTypes.array.isRequired,
@@ -23,11 +23,11 @@ class Bookshelf extends Component {
     } = this.props;
 
     return (
-      <div className='bookshelf'>
+      <div className="bookshelf">
 
-        <h2 className='bookshelf-title'>{title}</h2>
+        <h2 className="bookshelf-title">{title}</h2>
 
-        <div className='bookshelf-books'>
+        <div className="bookshelf-books">
           <ListBooks
             books={books}
             onShelfUpdate={onShelfUpdate}
@@ -39,8 +39,6 @@ class Bookshelf extends Component {
         </div>
 
       </div>
-    )
+    );
   }
 }
-
-export default Bookshelf;

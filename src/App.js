@@ -1,19 +1,12 @@
-import React from 'react'
+import React from 'react';
 import {Route} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import MyReads from './components/MyReads';
-import AddBook from './components/AddBook'
-import './App.css'
+import AddBook from './components/AddBook';
+import './App.css';
 
-class BooksApp extends React.Component {
-  state = {
-    books: [],
-    loadingBooks: false,
-    showModal: false,
-    bookModal: {}
-  }
-
-  bookshelves = [
+export default class BooksApp extends React.Component {
+  static BOOKSHELVES = [
     {
       name: 'currentlyReading',
       title: 'Currently Reading'
@@ -26,7 +19,14 @@ class BooksApp extends React.Component {
       name: 'read',
       title: 'Read'
     }
-  ];
+  ]
+
+  state = {
+    books: [],
+    loadingBooks: false,
+    showModal: false,
+    bookModal: {}
+  }
 
   componentDidMount() {
     this.setState({loadingBooks: true});
@@ -35,18 +35,18 @@ class BooksApp extends React.Component {
       books: books,
       loadingBooks: false
     }))
-    .catch( () => this.setState({loadingBooks: false}));
+    .catch(() => this.setState({loadingBooks: false}));
   }
 
   updateShelfOnBook = (bookData, newShelf) => {
     // Atualiza o book na api
-    return BooksAPI.update(bookData, newShelf).then( () => {
+    return BooksAPI.update(bookData, newShelf).then(() => {
       // depois atualiza o state books
-      this.setState( (prevState) => {
+      this.setState(prevState => {
         let updatedBooksState = prevState.books;
 
         // Procura o livro no state books
-        const booksIds = prevState.books.map( book => book.id );
+        const booksIds = prevState.books.map(book => book.id);
         const bookIdx = booksIds.indexOf(bookData.id);
 
         if (bookIdx !== -1) {
@@ -57,7 +57,7 @@ class BooksApp extends React.Component {
           bookData.shelf = newShelf;
           updatedBooksState.push(bookData);
         }
-        updatedBooksState = updatedBooksState.filter( book => book.shelf !== 'none');
+        updatedBooksState = updatedBooksState.filter(book => book.shelf !== 'none');
         return {books: updatedBooksState};
       });
     });
@@ -70,7 +70,7 @@ class BooksApp extends React.Component {
     });
   }
 
-  openModal = (book) => {
+  openModal = book => {
     this.setState({
       showModal: true,
       bookModal: book
@@ -81,10 +81,10 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
 
-        <Route exact path='/' render={ () => (
+        <Route exact path="/" render={ () => (
           <MyReads
             books={this.state.books}
-            bookshelves={this.bookshelves}
+            bookshelves={BooksApp.BOOKSHELVES}
             onShelfUpdate={this.updateShelfOnBook}
 
             onModalOpen={this.openModal}
@@ -95,12 +95,12 @@ class BooksApp extends React.Component {
             addBookPath={'/search'}
             loadingBooks={this.state.loadingBooks}
           />
-        )}/>
+        )} />
 
-        <Route exact path='/search' render={ () => (
+        <Route exact path="/search" render={ () => (
           <AddBook
             books={this.state.books}
-            bookshelves={this.bookshelves}
+            bookshelves={BooksApp.BOOKSHELVES}
             onShelfUpdate={this.updateShelfOnBook}
 
             onModalOpen={this.openModal}
@@ -110,11 +110,9 @@ class BooksApp extends React.Component {
 
             listBooksPath={'/'}
           />
-        )}/>
+        )} />
 
       </div>
-    )
+    );
   }
 }
-
-export default BooksApp
