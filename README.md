@@ -18,7 +18,7 @@ Para realizar a instalação das dependências do projeto é necessário ter o [
 
   1. Clone o projeto com o [git](https://git-scm.com/):
 
-      `git clone https://github.com/raphael-jorge/reactnd-project-myreads-starter.git`
+      `git clone https://github.com/raphael-jorge/reactnd-project-myreads.git`
 
   2. Navegue até a pasta do projeto:
 
