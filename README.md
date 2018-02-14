@@ -48,7 +48,7 @@ Para realizar a instalação das dependências do projeto é necessário ter o [
 
     Na página de adição pode-se realizar uma pesquisa que retornará os livros encontrados no servidor que são compatíveis com o termo pesquisado. Esses livros podem ser adicionados a qualquer uma de suas prateleiras.
 
-    **Importante**: Os termos de pesquisa que retornarão um conjunto de livros são limitados. Consulte o arquivo [SEARCH_THERMS.md](./SEARCH_THERMS.md) para saber quais são esses termos.
+    **Importante**: Os termos de pesquisa que retornarão um conjunto de livros são limitados. Consulte o arquivo [SEARCH_TERMS.md](./SEARCH_TERMS.md) para saber quais são esses termos.
 
   * #### Detalhes do Livro
 
