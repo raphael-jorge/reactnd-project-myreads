@@ -18,23 +18,23 @@ Para realizar a instalação das dependências do projeto é necessário ter o [
 
   1. Clone o projeto com o [git](https://git-scm.com/):
 
-    `git clone https://github.com/raphael-jorge/reactnd-project-myreads-starter.git`
+      `git clone https://github.com/raphael-jorge/reactnd-project-myreads-starter.git`
 
   2. Navegue até a pasta do projeto:
 
-    `cd reactnd-project-myreads-starter`
+      `cd reactnd-project-myreads-starter`
 
   3. Instale as dependências necessárias:
 
-    `npm install`
+      `npm install`
 
   4. Inicialize a aplicação:
 
-    `npm start`
+      `npm start`
 
   5. Uma nova janela deve ser aberta automaticamente no seu _browser_ após a inicialização da aplicação. Caso isso não ocorra, você pode acessa-la digitando a seguinte instrução na barra de endereços do seu browser:
 
-    `localhost:3000`
+      `localhost:3000`
 
 ## Funcionalidades
 
