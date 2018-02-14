@@ -22,7 +22,7 @@ Para realizar a instalação das dependências do projeto é necessário ter o [
 
   2. Navegue até a pasta do projeto:
 
-      `cd reactnd-project-myreads-starter`
+      `cd reactnd-project-myreads`
 
   3. Instale as dependências necessárias:
 
