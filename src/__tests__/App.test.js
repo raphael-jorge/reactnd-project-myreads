@@ -7,6 +7,7 @@ import * as BooksAPI from '../BooksAPI';
 jest.mock('../BooksAPI');
 jest.mock('react-modal');
 
+// setup: https://medium.com/selleo/testing-react-components-best-practices-2f77ac302d12
 const setup = route => {
   const shallowApp = shallow(
     <MemoryRouter initialEntries={[route]} initialIndex={0}>
